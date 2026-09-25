@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Dry Run') {
             steps {
-                sh 'helm install wordpress-test wordpress-chart --dry-run=client --debug'
+                sh 'KUBECONFIG=/dev/null helm install wordpress-test wordpress-chart --dry-run=client --debug'
             }
         }
     }
