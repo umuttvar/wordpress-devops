@@ -1,0 +1,8 @@
+mysql:
+  image: mysql:8.0
+  rootPassword: wordpress123
+  database: wordpress
+
+wordpress:
+  image: wordpress:latest
+  replicas: 1
