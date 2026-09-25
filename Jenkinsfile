@@ -1,19 +1,29 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage("Helm chart Kontrolu"){
-            steps{
+    stages {
+        stage('Lint') {
+            steps {
                 sh 'helm lint wordpress-chart'
             }
         }
-    }
-    post{
-       
-        success{
-            echo "Helm chart basariyla kontrol edildi"
+        stage('Template Render') {
+            steps {
+                sh 'helm template wordpress-chart > rendered-output.yaml'
+                sh 'cat rendered-output.yaml'
+            }
         }
-        failure{
-            echo "Helm chart kontrol edilemedi, loglar kontrol edilmeli!"
+        stage('Dry Run') {
+            steps {
+                sh 'helm install wordpress-test wordpress-chart --dry-run --debug'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Tum kontroller basarili, chart deploy edilmeye hazir'
+        }
+        failure {
+            echo 'Chart hatali, deploy edilemez'
         }
     }
 }
