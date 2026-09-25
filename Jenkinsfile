@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Dry Run') {
             steps {
-                sh 'helm install wordpress-test wordpress-chart --dry-run --debug'
+                sh 'helm install wordpress-test wordpress-chart --dry-run=client --debug'
             }
         }
     }
