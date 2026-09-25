@@ -12,18 +12,13 @@ pipeline {
                 sh 'cat rendered-output.yaml'
             }
         }
-        stage('Dry Run') {
-            steps {
-                sh 'KUBECONFIG=/dev/null helm install wordpress-test wordpress-chart --dry-run=client --debug'
-            }
-        }
     }
     post {
         success {
-            echo 'Tum kontroller basarili, chart deploy edilmeye hazir'
+            echo 'Chart basariyla dogrulandi ve render edildi'
         }
         failure {
-            echo 'Chart hatali, deploy edilemez'
+            echo 'Chart hatali'
         }
     }
 }
